@@ -1,0 +1,9 @@
+Package: com.binarycrypted.runtimex
+Name: RuntimeX
+Depends: mobilesubstrate, preferenceloader
+Version: 2.0.0
+Architecture: iphoneos-arm
+Description: In-game Reverse Engineering Console & HexLang 2.0 Interpreter with Settings Panel, Mach-VM Int/Float Scanner, ObjC Hooker & Speedhack.
+Maintainer: binarycrypted
+Author: binarycrypted
+Section: Development
