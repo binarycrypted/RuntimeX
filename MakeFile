@@ -1,16 +1,19 @@
-ARCHS = armv7
-TARGET = iphone:clang:latest:9.3
-INSTALL_TARGET_PROCESSES = SpringBoard Preferences
-
-include $(THEOS)/makefiles/common.mk
-
-TWEAK_NAME = RuntimeX
-RuntimeX_FILES = Tweak.xm
-RuntimeX_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
-RuntimeX_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore
-RuntimeX_LIBRARIES = substrate
-
-include $(THEOS_MAKE_PATH)/tweak.mk
-
-SUBPROJECTS += runtimexprefs
-include $(THEOS_MAKE_PATH)/aggregate.mk
+name: Build RuntimeX
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Theos
+        uses: Randomblock1/theos-action@v1
+      - name: Build Package
+        env:
+          THEOS: ${{ github.workspace }}/theos
+        run: make package FINALPACKAGE=1
+      - name: Upload DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: RuntimeX-deb
+          path: packages/*.deb
